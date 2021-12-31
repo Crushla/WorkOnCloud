@@ -2,6 +2,7 @@ package com.crush.server.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.crush.server.pojo.MenuRole;
+import com.crush.server.pojo.RespBean;
 
 /**
  * <p>
@@ -13,4 +14,11 @@ import com.crush.server.pojo.MenuRole;
  */
 public interface IMenuRoleService extends IService<MenuRole> {
 
+    /**
+     * 更新角色菜单
+     * @param rid
+     * @param mids
+     * @return
+     */
+    RespBean updateMenuRole(Integer rid, Integer[] mids);
 }

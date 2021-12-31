@@ -2,6 +2,8 @@ package com.crush.server.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.crush.server.pojo.AdminRole;
+import com.crush.server.pojo.RespBean;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.crush.server.pojo.AdminRole;
  */
 public interface AdminRoleMapper extends BaseMapper<AdminRole> {
 
+    Integer addAdminRole(@Param("adminId") Integer adminId, @Param("rids") Integer[] rids);
 }

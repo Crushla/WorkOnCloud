@@ -21,4 +21,60 @@
         id, url, path, component, name, iconCls, keepAlive, requireAuth, parentId, enabled
     </sql>
 
+
+    <resultMap id="Menus" type="com.crush.server.pojo.Menu" extends="BaseResultMap">
+        <collection property="children" ofType="com.crush.server.pojo.Menu">
+            <id column="id2" property="id"/>
+            <result column="url2" property="url"/>
+            <result column="path2" property="path" />
+            <result column="component2" property="component" />
+            <result column="name2" property="name" />
+            <result column="iconCls2" property="iconCls" />
+            <result column="keepAlive2" property="keepAlive" />
+            <result column="requireAuth2" property="requireAuth" />
+            <result column="parentId2" property="parentId" />
+            <result column="enabled2" property="enabled" />
+        </collection>
+    </resultMap>
+
+    <select id="getMenusByAdminId" resultMap="Menus">
+        SELECT DISTINCT  m1.*, m2.id as id2, m2.url as url2, m2.path as path2, m2.component as component2, m2.name as name2 , m2.iconCls as iconCls2, m2.keepAlive as keepAlive2, m2.requireAuth as requireAuth2, m2.parentId as parentId2, m2.enabled as enabled
+        FROM t_menu m1, t_menu m2, t_admin_role ar, t_menu_role mr
+        where m1.id = m2.parentId and mr.mid = m2.id and mr.rid = ar.rid and ar.adminId = #{id}
+    </select>
+
+
+    <resultMap id="MenusWithRole" type="com.crush.server.pojo.Menu" extends="BaseResultMap">
+        <collection property="roles" ofType="com.crush.server.pojo.Role">
+            <id column="rid" property="id"/>
+            <result column="rname" property="name"/>
+            <result column="rnameZh" property="nameZh"/>
+        </collection>
+    </resultMap>
+
+    <select id="getMenusWithRole" resultMap="MenusWithRole">
+        SELECT m.*, r.id as rid, r.name as rname, r.nameZh as rnameZh
+        From t_menu m, t_menu_role mr, t_role r
+        where m.id = mr.mid and r.id = mr.rid
+        ORDER BY m.id
+    </select>
+
+
+    <resultMap id="MenusWithChildren" type="com.crush.server.pojo.Menu" extends="BaseResultMap">
+        <id column="id1" property="id"/>
+        <result column="name1" property="name"/>
+        <collection property="children" ofType="com.crush.server.pojo.Menu">
+            <id column="id2" property="id"/>
+            <result column="name2" property="name"/>
+            <collection property="children" ofType="com.crush.server.pojo.Menu">
+                <id column="id3" property="id"/>
+                <result column="name3" property="name"/>
+            </collection>
+        </collection>
+    </resultMap>
+    <select id="getAllMenus" resultMap="MenusWithChildren">
+        SELECT m1.id as id1, m1.name as name1,  m2.id as id2, m2.name as name2, m3.id as id3, m3.name as name3
+        FROM t_menu m1,t_menu m2, t_menu m3
+        WHERE m1.id = m2.parentId and m2.id = m3.parentId and m3.enabled = true
+    </select>
 </mapper>

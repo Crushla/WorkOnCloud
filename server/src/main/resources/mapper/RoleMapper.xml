@@ -13,5 +13,12 @@
     <sql id="Base_Column_List">
         id, name, nameZh
     </sql>
-
+    
+    
+    <select id="getRoles" resultType="com.crush.server.pojo.Role">
+        SELECT r.id, r.name, r.nameZh
+        FROM t_role as r
+                 LEFT JOIN t_admin_role as ar on r.id = ar.rid
+        where ar.adminId = #{adminId}
+    </select>
 </mapper>

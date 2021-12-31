@@ -2,9 +2,12 @@ package com.crush.server.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.crush.server.pojo.Admin;
+import com.crush.server.pojo.Menu;
 import com.crush.server.pojo.RespBean;
+import com.crush.server.pojo.Role;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * <p>
@@ -31,4 +34,26 @@ public interface IAdminService extends IService<Admin> {
      * @return
      */
     Admin getAdminByUserName(String username);
+
+    /**
+     * 根据用户id查询角色列表
+     * @param adminId
+     * @return
+     */
+    List<Role> getRoles(Integer adminId);
+
+    /**
+     * 获取所有操作员
+     * @param keywords
+     * @return
+     */
+    List<Admin> getAllAdmins(String keywords);
+
+    /**
+     * 更新操作员角色
+     * @param adminId
+     * @param rids
+     * @return
+     */
+    RespBean updateAdminRole(Integer adminId, Integer[] rids);
 }

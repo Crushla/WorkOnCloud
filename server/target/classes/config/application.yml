@@ -16,13 +16,19 @@ spring:
       max-lifetime: 180000
       connection-timeout: 30000
       connection-test-query: SELECT 1
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          public-key-location:
   main:
-    allow-circular-references: true
+    allow-circular-references: truer
+  redis:
+    timeout: 10000ms
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+    lettuce:
+      pool:
+        max-active: 1024
+        max-wait: 10000ms
+        max-idle: 200
+        min-idle: 5
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/*Mapper.xml

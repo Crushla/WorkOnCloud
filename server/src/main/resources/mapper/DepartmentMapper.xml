@@ -17,4 +17,24 @@
         id, name, parentId, depPath, enabled, isParent
     </sql>
 
+    <resultMap id="DepartmentWithChildren" type="com.crush.server.pojo.Department" extends="BaseResultMap">
+        <collection property="children" ofType="com.crush.server.pojo.Department" select="com.crush.server.mapper.DepartmentMapper.getAllDepartments" column="id">
+
+        </collection>
+    </resultMap>
+    <select id="getAllDepartments" resultMap="DepartmentWithChildren">
+        select
+        <include refid="Base_Column_List"/>
+        from t_department
+        where parentId = #{parentId}
+    </select>
+
+    <select id="addDep" statementType="CALLABLE">
+        CALL  addDep(#{name,mode=IN,jdbcType=VARCHAR},#{parentId,mode=IN,jdbcType=INTEGER},#{enabled,mode=IN,jdbcType=BOOLEAN},
+            #{result,mode=OUT,jdbcType=INTEGER}, #{id,mode=OUT,jdbcType=INTEGER})
+    </select>
+
+    <select id="deleteDep" statementType="CALLABLE">
+        CALL deleteDep(#{id,mode=IN,jdbcType=INTEGER},#{result,mode=OUT,jdbcType=INTEGER})
+    </select>
 </mapper>

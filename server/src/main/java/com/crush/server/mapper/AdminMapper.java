@@ -2,6 +2,10 @@ package com.crush.server.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.crush.server.pojo.Admin;
+import com.crush.server.pojo.Menu;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +17,5 @@ import com.crush.server.pojo.Admin;
  */
 public interface AdminMapper extends BaseMapper<Admin> {
 
+    List<Admin> getAllAdmins(@Param("id") Integer id, @Param("keywords") String keywords);
 }

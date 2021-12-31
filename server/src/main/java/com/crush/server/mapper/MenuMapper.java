@@ -3,6 +3,8 @@ package com.crush.server.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.crush.server.pojo.Menu;
 
+import java.util.List;
+
 /**
  * <p>
  *  Mapper 接口
@@ -13,4 +15,9 @@ import com.crush.server.pojo.Menu;
  */
 public interface MenuMapper extends BaseMapper<Menu> {
 
+    List<Menu> getMenusByAdminId(Integer id);
+
+    List<Menu> getMenusWithRole();
+
+    List<Menu> getAllMenus();
 }
